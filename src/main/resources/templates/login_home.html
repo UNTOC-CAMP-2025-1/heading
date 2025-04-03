@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <script>
+        async function login(event) {
+            event.preventDefault(); // 폼 기본 제출 막기
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            });
+
+            const message = await response.text();
+            if (response.ok) {
+                alert("🎉 로그인 성공!");
+                window.location.href = "/"; // 로그인 성공 후 리다이렉트할 페이지
+            } else {
+                alert("❌ 로그인 실패: " + message);
+            }
+        }
+    </script>
+</head>
+<body>
+<h2>로그인</h2>
+<form onsubmit="login(event)">
+    <label>아이디: <input type="text" id="username" name="username" required></label><br><br>
+    <label>비밀번호: <input type="password" id="password" name="password" required></label><br><br>
+    <button type="submit">로그인</button>
+</form>
+<p>아직 회원이 아니신가요? <a href="/register-home">회원가입</a></p>
+</body>
+</html>
