@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <script>
+        let verifiedToken = "";
+        let verificationStartTime = null;
+
+        async function checkUsername() {
+            const username = document.getElementById("username").value;
+            const result = await fetch(`/check-username?username=${username}`);
+            const available = await result.json();
+            const message = document.getElementById("usernameMessage");
+            if (available) {
+                message.innerText = "사용 가능한 아이디입니다.";
+                message.style.color = "green";
+            } else {
+                message.innerText = "이미 사용 중인 아이디입니다.";
+                message.style.color = "red";
+            }
+        }
+
+        async function checkBojId() {
+            const bojId = document.getElementById("bojId").value;
+            const result = await fetch(`/check-boj-id?bojId=${bojId}`);
+            const available = await result.json();
+            const message = document.getElementById("bojIdMessage");
+            const verifyBtn = document.getElementById("verifyBtn");
+
+            if (available) {
+                message.innerText = "사용 가능한 백준 아이디입니다.";
+                message.style.color = "green";
+                verifyBtn.disabled = false;
+            } else {
+                message.innerText = "이미 사용 중이거나 잘못된 백준 아이디입니다.";
+                message.style.color = "red";
+                verifyBtn.disabled = true;
+            }
+        }
+
+        async function requestToken() {
+            const bojId = document.getElementById("bojId").value;
+            const result = await fetch(`/boj/token`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ bojId: bojId })
+            });
+            if (result.ok) {
+                verifiedToken = await result.text();
+                verificationStartTime = new Date();
+                document.getElementById("verifyMessage").innerText = `자기소개란에 다음 메시지를 입력하세요: ${verifiedToken}`;
+                document.getElementById("bioVerifyBtn").disabled = false;
+            } else {
+                alert("토큰 생성 실패");
+            }
+        }
+
+        async function verifyBio() {
+            const bojId = document.getElementById("bojId").value;
+            const now = new Date();
+            const elapsedSeconds = (now - verificationStartTime) / 1000;
+            if (elapsedSeconds > 180) {
+                alert("3분이 지났습니다. 다시 인증을 시도해주세요.");
+                return;
+            }
+
+            const result = await fetch("/boj/verify", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ bojId: bojId, token: verifiedToken })
+            });
+
+            const message = await result.text();
+            if (result.ok) {
+                document.getElementById("submitBtn").disabled = false;
+                alert("✅ 인증 성공! 회원가입 버튼이 활성화됩니다.\n\n" + message);
+            } else {
+                alert("❌ 인증 실패: " + message);
+            }
+        }
+
+        function validatePassword() {
+            const pw1 = document.getElementById("password").value;
+            const pw2 = document.getElementById("confirmPassword").value;
+            const msg = document.getElementById("pwMessage");
+            if (pw1.length >= 6 && pw1 === pw2) {
+                msg.innerText = "비밀번호가 유효합니다.";
+                msg.style.color = "green";
+            } else {
+                msg.innerText = "비밀번호가 일치하지 않거나 6자 미만입니다.";
+                msg.style.color = "red";
+            }
+        }
+
+        async function submitForm(event) {
+            event.preventDefault(); // 폼 기본 제출 막기
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const bojId = document.getElementById("bojId").value;
+
+            const response = await fetch("/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    bojId: bojId
+                })
+            });
+
+            const message = await response.text();
+            if (response.ok) {
+                alert("🎉 회원가입 성공: " + message);
+                window.location.href = "/login_home"; // 성공 후 로그인 페이지로 리다이렉트
+            } else {
+                alert("❌ 회원가입 실패: " + message);
+            }
+        }
+    </script>
+</head>
+<body>
+<h2>회원가입</h2>
+<form onsubmit="submitForm(event)">
+    <label>아이디: <input type="text" id="username" name="username"></label>
+    <button type="button" onclick="checkUsername()">중복 체크</button>
+    <span id="usernameMessage"></span>
+    <br><br>
+
+    <label>비밀번호: <input type="password" id="password" name="password" oninput="validatePassword()"></label><br>
+    <label>비밀번호 확인: <input type="password" id="confirmPassword" oninput="validatePassword()"></label>
+    <span id="pwMessage"></span>
+    <br><br>
+
+    <label>백준 아이디: <input type="text" id="bojId" name="bojId"></label>
+    <button type="button" onclick="checkBojId()">중복 체크</button>
+    <span id="bojIdMessage"></span><br>
+
+    <button type="button" id="verifyBtn" onclick="requestToken()" disabled>인증하기</button><br>
+    <p id="verifyMessage"></p>
+    <button type="button" id="bioVerifyBtn" onclick="verifyBio()" disabled>자기소개 확인</button>
+    <br><br>
+
+    <button type="submit" id="submitBtn" disabled>회원가입</button>
+</form>
+</body>
+</html>
