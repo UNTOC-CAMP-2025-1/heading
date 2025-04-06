@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.*;
 import org.untoc_camp.service.register.RegisterService;
 
 @RestController
-@RequestMapping("/check-username")
+@RequestMapping("/register")
 @RequiredArgsConstructor
 public class UsernameCheckController {
     private final RegisterService registerService;
 
     // localhost:8080/check-username?username=username
-    @GetMapping
-    public ResponseEntity<Boolean> checkUsername(@RequestParam String username) {
+    @PostMapping("/check_username")
+    public ResponseEntity<Boolean> checkUsername(@RequestBody String username) {
         return ResponseEntity.ok(registerService.isUsernameAvailable(username));
     }
 }

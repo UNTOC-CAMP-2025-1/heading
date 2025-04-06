@@ -9,12 +9,12 @@ import org.untoc_camp.service.register.BojVerificationService;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/boj/token")
+@RequestMapping("/register")
 @RequiredArgsConstructor
 public class BojTokenController {
     private final BojVerificationService bojVerificationService;
 
-    @PostMapping
+    @PostMapping("/boj_token")
     public ResponseEntity<String> createToken(@RequestBody BojVerifyRequestDto bojVerifyRequestDto) {
         String token = bojVerificationService.generateAndSaveToken(bojVerifyRequestDto.getBojId());
         return ResponseEntity.ok(token);

@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import org.untoc_camp.service.register.RegisterService;
 
 @RestController
-@RequestMapping("/check-boj-id")
+@RequestMapping("/register")
 @RequiredArgsConstructor
 public class BojCheckController {
     private final RegisterService registerService;
 
     // localhost:8080/check-boj-id?bojId=bojId
-    @GetMapping
-    public ResponseEntity<Boolean> checkBojId(@RequestParam String bojId) {
+    @PostMapping("/check_bojId")
+    public ResponseEntity<Boolean> checkBojId(@RequestBody String bojId) {
         return ResponseEntity.ok(registerService.isBojIdAvailable(bojId));
     }
 }

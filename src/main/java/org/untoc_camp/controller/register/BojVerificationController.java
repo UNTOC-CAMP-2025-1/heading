@@ -7,13 +7,13 @@ import org.untoc_camp.dto.register.BojVerifyRequestDto;
 import org.untoc_camp.service.register.BojVerificationService;
 
 @RestController
-@RequestMapping("/boj/verify")
+@RequestMapping("/register")
 @RequiredArgsConstructor
 public class BojVerificationController {
 
     private final BojVerificationService bojVerificationService;
 
-    @PostMapping
+    @PostMapping("/boj_verify")
     public ResponseEntity<String> verify(@RequestBody BojVerifyRequestDto dto) {
         boolean result = bojVerificationService.verifyToken(dto.getBojId(), dto.getToken());
         if (result) {

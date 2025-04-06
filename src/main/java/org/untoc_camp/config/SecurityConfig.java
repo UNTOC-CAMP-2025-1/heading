@@ -21,12 +21,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/register/**",
-                                "/check-username/**",
-                                "/check-boj-id/**",
-                                "/boj/**",
-                                "/login-home",
-                                "/login",
-                                "/register-home" // 🔥 여기에 추가
+                                "/login/**",
+                                "/ranking/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 );

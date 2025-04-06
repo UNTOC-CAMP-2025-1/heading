@@ -19,6 +19,6 @@ public class User {
 
     private String password;
 
-    @Column(unique = true)
+    @Column(name = "boj_id", unique = true)
     private String bojId; // 백준 아이디
 }
