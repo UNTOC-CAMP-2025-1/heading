@@ -7,14 +7,15 @@ body {
 
 .problem-word {
     margin: 10px 0px 10px 30px;
+    color: #350FC0;
 }
 
 .problem-wrap {
     width: 1200px;
     height: 800px;
     margin-top: 60px;
-    background-color: #b2c7dc;
-
+    background-color: #eef1ff;
+    border-radius: 10px;
 }
 
 .problem-left {
@@ -30,6 +31,7 @@ body {
 table tr td,
 table tr th {
   border-bottom: 1px solid #ccc;
+  padding-left: 10px;
 }
 
 .problem-right {

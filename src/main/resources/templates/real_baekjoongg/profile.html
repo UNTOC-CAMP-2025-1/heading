@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>유저 프로필</title>
-  <link rel="stylesheet" href="profile.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>유저 프로필</title>
+    <link rel="stylesheet" href="profile.css" />
+    <link rel="stylesheet" href="nav.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
 </head>
+
 <body>
-  <nav class="nav-main">
-    <div OnClick="location.href ='index.html'" style="cursor:pointer;" class="nav-left">
-      <img src="./img/임시로고.png" alt="Baekjoon GG Logo" class="site-logo" />
-      <p style="float: right;">BAEKJOON.GG</p>
-    </div>
-    <div class="nav-mid">
-      <a style="margin-left: 10%;" href="#" class="nav-link">랭킹</a>
-      <a href="#" class="nav-link">문제</a>
-      <a href="#" class="nav-link">커뮤니티</a>
-      <a href="#" class="nav-link">프로필</a>
-    </div>
-    <div class="nav-right">
-      <a href="signup.html" class="auth-link">사용자등록</a>
-    </div>
-  </nav>
+    <nav class="nav-main">
+        <div OnClick="location.href ='index.html'" style="cursor:pointer;" class="nav-left">
+            <img src="./img/임시로고.png" alt="Baekjoon GG Logo" class="site-logo" />
+            <p style="float: right;">BAEKJOON.GG</p>
+        </div>
+        
+        <div class="nav-mid">
+            <a style="margin-left: 10%;" href="ranking.html" class="nav-link">랭킹</a>
+            <a href="problem.html" class="nav-link">문제</a>
+            <a href="community.html" class="nav-link">커뮤니티</a>
+            <a href="search.html" class="nav-link">프로필</a>
+        </div>
+        <div class="nav-right">
+            <a href="signup.html" class="auth-link">사용자등록</a>
+        </div>
+    </nav>
 
   <main class="profile-container">
     <section class="user-info">
@@ -76,7 +82,7 @@
         </div>
       </div>
 
-      <div class="chart-row">
+      <!-- <div class="chart-row">
         <div class="streak-card">
           <h3>월별 문제 풀이 수</h3>
           <canvas id="streakChart"></canvas>
@@ -85,8 +91,18 @@
           <h3>현재 0일 연속으로 풀고 있어요</h3>
           <canvas id="grassChart"></canvas>
         </div>
+      </div> -->
+      <div class="strick-wrap">
+        <img id="strick" style="width: 100%; height: 600px;" src="http://mazandi.herokuapp.com/api?handle=backjaemin&theme=warm" alt="백준 잔디 프로필" />
+      
+        <div class="strick-boxes">
+          <div class="box" onclick="toggleStrick('Warm')">Warm</div>
+          <div class="box" onclick="toggleStrick('Cold')">Cold</div>
+          <div class="box" onclick="toggleStrick('Dark')">Dark</div>
+        </div>
       </div>
-    </section>
+
+      </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

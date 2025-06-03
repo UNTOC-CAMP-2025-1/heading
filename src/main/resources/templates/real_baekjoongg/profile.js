@@ -137,3 +137,13 @@ function toggleRanking(type) {
     `;
   }
 }
+
+function toggleStrick(type) {
+  if (type === 'Warm') {
+    document.getElementById("strick").src = 'http://mazandi.herokuapp.com/api?handle=backjaemin&theme=warm';
+  } else if (type === 'Cold') {
+    document.getElementById("strick").src = 'http://mazandi.herokuapp.com/api?handle=backjaemin&theme=cold';
+  } else if (type === 'Dark') {
+    document.getElementById("strick").src = 'http://mazandi.herokuapp.com/api?handle=backjaemin&theme=dark';
+  }
+}

@@ -112,3 +112,14 @@ span {
     line-height: 40px;
     border-bottom: 2px solid #d6d6d6;
 }
+
+.title {
+    font-weight: bold;
+    /* background-color:     #350FC0; */
+
+}
+
+.contents {
+    color: #737373;
+    /* background-color: #350FC0; */
+}

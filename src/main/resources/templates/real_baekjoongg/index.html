@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
+    <script src="ranking.js"></script>
 </head>
 
 <body>
@@ -30,9 +31,37 @@
             <a href="signup.html" class="auth-link">사용자등록</a>
         </div>
     </nav>
-    <header>
-
-    </header>
+    <section style="margin-top: 60px; width: 100%;" class="ranking-tabs">
+      <div class="ranking-options">
+        <div class="ranking-option">푼 문제 순위</div>
+        <div class="ranking-option active">푼 효원문제 순위</div>
+        <div class="ranking-option">랭킹 상승 순위</div>
+      </div>
+      <hr class="whitehr">
+      <div class="ranking-period">
+        <span class="selected">일간</span>
+        <span>주간</span>
+        <span>월간</span>
+      </div><br>
+      <hr class="whitehr2">
+      <div class="top3-container">
+        <div class="top3-card silver">
+          <img src="./img/profile.png" alt="Profile">
+          <div class="username">장철진</div>
+          <div class="points">15문제</div>
+        </div>
+        <div class="top3-card gold">
+          <img src="./img/profile.png" alt="Profile">
+          <div class="username">곽두팔</div>
+          <div class="points">15문제</div>
+        </div>
+        <div class="top3-card bronze">
+          <img src="./img/profile.png" alt="Profile">
+          <div class="username">황두칠</div>
+          <div class="points">15문제</div>
+        </div>
+      </div>
+    </section>
     <main>
         <article class="feature-block ranking">
             <h2 class="feature-title">

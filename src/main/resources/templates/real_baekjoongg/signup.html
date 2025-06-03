@@ -52,7 +52,7 @@
                     <p class="signup-notice">
                         ‘인증번호 받기’를 누르면 인증번호가 발급됩니다.
                     </p>
-                    <p class="signup-notice"><a href="#" class="link">백준 정보 수정</a>에서 백준 상태 메시지를 해당 값으로 변경한 뒤, 인증완료 버튼을 눌러 주세요.</p>
+                    <p class="signup-notice"><a target="_blank" href="https://solved.ac/" class="link">solved.ac 프로필 편집</a>에서 백준 상태 메시지를 해당 값으로 변경한 뒤, 인증완료 버튼을 눌러 주세요.</p>
                 <!-- </div> -->
             </div>
         
@@ -62,34 +62,28 @@
                     <label for="nickname" class="form-label">닉네임</label>
                     <div class="input-group">
                         <input type="text" class="form-input" id="nickname"/>
-                        <button type="button" class="btn-primary" style="width: 100px;">중복확인</button>
+                        <button type="button" class="btn-primary" style="width: 120px;">중복확인</button>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="id" class="form-label">백준아이디</label>
                     <div class="input-group">
                         <input type="text" class="form-input" id="id"/>
-                        <button type="button" class="btn-primary" style="width: 100px;">인증번호받기</button>
+                        <button type="button" class="btn-primary" style="width: 120px;">인증번호받기</button>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="number" class="form-label">아래의 인증번호로 백준상태메시지를 변경해주세요</label>
                     <div class="input-group">
                         <input type="text" class="form-input" id="number"/>
-                        <button type="button" class="btn-primary" style="width: 100px;">인증하기</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="stat" class="form-label">상태 메시지 (다른 사람에게 보이고 싶은 한마디)</label>
-                    <div class="input-group">
-                        <input type="text" class="form-input-nobutton" id="stat"/>
+                        <button type="button" class="btn-primary" style="width: 120px;">인증하기</button>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email" class="form-label">이메일</label>
                     <div class="input-group">
                         <input type="email" class="form-input-nobutton" id="email"/>
-                    </div>
+                    </div>  
                 </div>
                 <div class="half-wrap">
                     <div class="form-group-half">
@@ -119,10 +113,50 @@
                         </div>
                     </div>
                 </div>
+                <div style="font-size: 12px; color: #777;margin: 0px 0px 20px 0px;">
+                    목표로 하는 기한과 문제 풀이 수를 적어주세요. ex) 하루 한 문제
+                </div>
+                <div class="half-wrap">
+                    <div class="form-group-half">
+                        <label for="day" class="form-label">며칠동안</label>
+                        <div class="input-group">
+                            <select name="day" class="form-input-nobutton" id="day">
+                                <option value="" selected disabled hidden></option>
+                                <option style="color: green;" value="1">하루</option>
+                                <option value="2">이틀</option>
+                                <option value="7">일주일</option>
+                                <option style="color: red;" value="30">한 달</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <div class="form-group-half">
+                        <label for="amount" class="form-label">몇문제</label>
+                        <div class="input-group">
+                            <select name="amount" class="form-input-nobutton" id="amount">
+                                <option value="" selected disabled hidden></option>
+                                <option value="1">1문제</option>
+                                <option value="2">2문제</option>
+                                <option value="3">3문제</option>
+                                <option value="5">5문제</option>
+                                <option value="10">10문제</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="form-group">
-                    <label for="goal" class="form-label">목표치</label>
+                    <label for="goal" class="form-label">목표티어</label>
                     <div class="input-group">
-                        <input style="height: 200px;" type="text" class="form-input-nobutton" id="goal"/>
+                        <select name="goal" class="form-input-nobutton" id="goal">
+                            <option value="" selected disabled hidden></option>
+                            <option value="Bronze">브론즈</option>
+                            <option value="Silver">실버</option>
+                            <option value="Gold">골드</option>
+                            <option value="Platinum">플레티넘</option>
+                            <option value="Diamond">다이아몬드</option>
+                            <option value="Ruby">루비</option>
+                        </select>
                     </div>
                 </div>
 
@@ -130,8 +164,8 @@
                     <input type="checkbox" id="newsletter" />
                     <label for="newsletter">목표치 알람 및 기타 안내 이메일 받기</label>
                 </div>
-
-                <button type="submit" class="btn-submit">사용자가입</button>
+ 
+                <button type="submit" class="btn-submit" style="width: 120px;">사용자가입</button>
             </form>
         </section>
     </main>
@@ -207,11 +241,12 @@
             const nickname = document.querySelector('#nickname').value.trim();
             const baekjoonId = document.querySelector('#id').value.trim();
             const code = document.querySelector('#number').value.trim();
-            const status = document.querySelector('#stat').value.trim();
             const email = document.querySelector('#email').value.trim();
             const grade = document.querySelector('#grade').value;
             const field = document.querySelector('#field').value;
-            const goal = document.querySelector('#goal').value.trim();
+            const day = document.querySelector('#day').value;
+            const amount = document.querySelector('#amount').value;
+            const goal = document.querySelector('#goal').value;
 
 
             // recaptcha 체크박스 확인 (.recaptcha-input)
@@ -230,9 +265,6 @@
             if (!code) {
                 errorMsg += "인증번호를 입력해주세요.\n";
             }
-            if (!status) {
-                errorMsg += "상태메세지를 입력해주세요.\n";
-            }
             if (!email) {
                 errorMsg += "이메일을 입력해주세요.\n";
             }
@@ -241,6 +273,12 @@
             }
             if (!field) {
                 errorMsg += "학과을 입력해주세요.\n";
+            }
+            if (!day) {
+                errorMsg += "기한을 입력해주세요..\n";
+            }
+            if (!amount) {
+                errorMsg += "목표문제수를 입력해주세요.\n";
             }
             if (!goal) {
                 errorMsg += "목표치 입력해주세요.\n";

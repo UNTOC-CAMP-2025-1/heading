@@ -35,9 +35,11 @@
         <div class="search-bar">
             <label for="search" class="search-left">검색 :</label>
             <input id="search" type="text" class="search-input" placeholder="백준 아이디를 입력해주세요">
-            <button type="submit" class="search-right">.GG</button>
+            <button onClick="location.href='profile.html'" type="submit" class="search-right">.GG</button>
         </div>
-        <table class="ranking-table">
+        <div class="ranking-wrap">
+            <hr class="ranking-hr">
+            <table class="ranking-table">
             <thead>
                 <tr>
                     <th>순위</th>
@@ -106,6 +108,8 @@
                 </tr>
             </tbody>
         </table>
+        </div>
+        
     </main>
     <footer>
         <div class="update">
