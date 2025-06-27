@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>유저 프로필</title>
+    <link rel="stylesheet" href="profile.css" />
+    <link rel="stylesheet" href="nav.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
+</head>
+
+<body>
+    <nav class="nav-main">
+        <div OnClick="location.href ='index.html'" style="cursor:pointer;" class="nav-left">
+            <img src="./img/임시로고.png" alt="Baekjoon GG Logo" class="site-logo" />
+            <p style="float: right;">BAEKJOON.GG</p>
+        </div>
+        
+        <div class="nav-mid">
+            <a style="margin-left: 10%;" href="ranking.html" class="nav-link">랭킹</a>
+            <a href="problem.html" class="nav-link">문제</a>
+            <a href="community.html" class="nav-link">커뮤니티</a>
+            <a href="search.html" class="nav-link">프로필</a>
+        </div>
+        <div class="nav-right">
+            <a href="signup.html" class="auth-link">사용자등록</a>
+        </div>
+    </nav>
+
+  <main class="profile-container">
+    <section class="user-info">
+      <div class="profile-pic">
+        <img src="./img/profile.png" alt="Profile" class="profile-image" />
+      </div>
+      <div class="user-meta">
+        <h2>홍길동</h2>
+        <span class="badge">Platinum</span>
+      </div>
+      <div class="ranking-panel-wrapper">
+        <div class="ranking-display-panel" id="ranking-display">
+          원하는 랭킹 버튼을 눌러 정보를 확인하세요
+        </div>
+        <div class="ranking-boxes">
+          <div class="box" onclick="toggleRanking('today')">오늘랭킹</div>
+          <div class="box" onclick="toggleRanking('other')">기타랭킹</div>
+          <div class="box" onclick="toggleRanking('change')">랭킹변화</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary-cards">
+      <div class="goal-box">
+        ✅ 오늘의 목표치 달성!
+      </div>
+      <div class="goal-box">
+        🎯 하루 3문제 풀기 진행 중
+      </div>
+    </section>
+
+    <section class="statistics">
+      <div class="chart-row">
+        <div class="chart-card">
+          <canvas id="pieChart"></canvas>
+        </div>
+        <div class="table-card">
+          <h3>총 125문제 풀었어요</h3>
+          <table>
+            <thead>
+              <tr><th>레벨</th><th>문제 수</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="color: #B87333">Bronze</td><td>101</td></tr>
+              <tr><td style="color: #C0C0C0">Silver</td><td>23</td></tr>
+              <tr><td style="color: #FFD700">Gold</td><td>1</td></tr>
+              <tr><td style="color: #8EF">Platinum</td><td>0</td></tr>
+              <tr><td style="color: #00F">Diamond</td><td>0</td></tr>
+              <tr><td style="color: #F00">Ruby</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- <div class="chart-row">
+        <div class="streak-card">
+          <h3>월별 문제 풀이 수</h3>
+          <canvas id="streakChart"></canvas>
+        </div>
+        <div class="grass-card">
+          <h3>현재 0일 연속으로 풀고 있어요</h3>
+          <canvas id="grassChart"></canvas>
+        </div>
+      </div> -->
+      <div class="strick-wrap">
+        <img id="strick" style="width: 100%; height: 600px;" src="http://mazandi.herokuapp.com/api?handle=backjaemin&theme=warm" alt="백준 잔디 프로필" />
+      
+        <div class="strick-boxes">
+          <div class="box" onclick="toggleStrick('Warm')">Warm</div>
+          <div class="box" onclick="toggleStrick('Cold')">Cold</div>
+          <div class="box" onclick="toggleStrick('Dark')">Dark</div>
+        </div>
+      </div>
+
+      </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.0/dist/chartjs-chart-matrix.min.js"></script>
+  <script src="profile.js"></script>
+</body>
+
+<footer>
+  <div class="update">
+    <p>업데이트</p>
+  </div>
+  <div class="footer-info">
+    <div style="margin-left: 15%;">
+      <p style="color: #ABABAB;">부산광역시 금정구 부산대학로63번길 2 (장전동) 부산대학교 소프트웨어융합교육원</p>
+      <p style="color: #ABABAB;">TEL : 051-123-4567, 321, 1026</p>
+      <p style="color: #D9D9D9">Copyright© Pusan National Univ. All Right Reserved.</p>
+      <p style="color: #ABABAB;">Powered by <span style="color: #350FC0;">OnlineJudge</span> Version: 1d496146f0d67811dc8f187eaebeccdae1277a98</p>
+    </div>
+  </div>
+</footer>
+</html>

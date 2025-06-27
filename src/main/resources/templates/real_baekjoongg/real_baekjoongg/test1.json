@@ -1,0 +1,29 @@
+{
+    "users" : [
+        {
+            "name" : "backjaemin",
+            "grade" : "1",
+            "field" : "컴공",
+            "tier" : "Silver 2",
+            "solved" : "8",
+            "score" : "10"
+        },
+        {
+            "name" : "qwer",
+            "grade1" : "2",
+            "field" : "인공지능",
+            "tier" : "Ruby 2",
+            "solved" : "24",
+            "score" : "10"
+        },
+        {
+            "name" : "bbjjmm",
+            "grade" : "3",
+            "field" : "컴공",
+            "tier" : "Gold 4",
+            "solved" : "14",
+            "score" : "10"
+        }
+    ]
+
+}

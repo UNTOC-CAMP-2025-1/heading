@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>백준지지</title>
+    <link rel="stylesheet" href="community.css">
+    <link rel="stylesheet" href="nav.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
+
+
+    
+</head>
+
+<body>
+    <nav class="nav-main">
+
+        <div OnClick="location.href ='index.html'" style="cursor:pointer;" class="nav-left">
+            <img src="./img/임시로고.png" alt="Baekjoon GG Logo" class="site-logo" />
+            <p style="float: right;">BAEKJOON.GG</p>
+        </div>
+        
+        <div class="nav-mid">
+            <a style="margin-left: 10%;" href="ranking.html" class="nav-link">랭킹</a>
+            <a href="problem.html" class="nav-link">문제</a>
+            <a href="community.html" class="nav-link">커뮤니티</a>
+            <a href="search.html" class="nav-link">프로필</a>
+        </div>
+        <div class="nav-right">
+            <a href="signup.html" class="auth-link">사용자등록</a>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="main-left">
+            <div class="main-title">
+                <span style="color: #350FC0;">자유게시판</span>
+            </div>
+            <!-- <div class="main-head">
+                
+            </div> -->
+            <div class="wrap-articles" id="post-body">
+                <div class="main-write" id="writeBtn">
+                    <span>새 글을 작성해주세요!</span>
+                </div>
+                <form class="write" id="post-form" style="display: none;">
+                    <div class="nickname">
+                        <input type="text" id="author" name="author" placeholder="닉네임" required>
+                    </div>
+                    <div class="title">
+                        <input type="text" id="title" name="title" placeholder="글 제목" required>
+                    </div>
+                    <div class="content">
+                        <textarea id="content" name="content" placeholder="백준지지는 누구나 기분 좋게 참여할 수 있는 커뮤니티를 만들기 위해 커뮤니티 이용규칙을 제정하여 운영하고 있습니다. 
+
+위반 시 게시물이 삭제되고 서비스 이용이 일정 기간 제한될 수 있습니다. 아래는 이 게시판에 해당하는 핵심 내용에 대한 요약 사항이며, 게시물 작성 전 커뮤니티 이용규칙 전문을 반드시 확인하시기 바랍니다. 
+    
+※ 규칙 위반 
+- 타인의 권리를 침해하거나 불쾌감을 주는 행위 - 범죄, 불법 행위 등 법령을 위반하는 행위 
+- 욕설, 비하, 차별, 혐오, 자살, 폭력 관련 내용을 포함한 게시물 작성 행위 
+- 음란물, 성적 수치심을 유발하는 행위 
+- 스포일러, 공포, 속임, 놀라게 하는 행위 " required></textarea>
+                    </div>
+                    <div class="write-password">
+                        <input type="password" id="password" name="password" placeholder="비밀번호 (수정/삭제용)" required>
+                    </div>
+                    <div class="write-footer">
+                        <button type="submit">글쓰기</button>
+                    </div>
+                </form>
+                
+                <div id="pagination" style="margin-top: 15px;"></div>
+            </div>
+            
+            
+        </div>
+        <div class="main-right">
+            <div style="display: none;" class="main-right-1">
+                <div class="main-right-title">
+                    <span>실시간 인기글</span>
+                </div>
+                <div class="main-right-1-contents">
+                    
+                </div>
+            </div>
+            <div class="main-right-2">
+                <div class="main-right-title">
+                    <span>추천게시물</span>
+                </div>
+                <div class="main-right-2-contents">
+                    <span>백준 공부법</span>
+                </div>
+                <div class="main-right-2-contents">
+                    <span>코드 오류 찾기</span>
+                </div>
+                <div class="main-right-2-contents">
+                    <span>머시기 암튼 필요한 거</span>
+                </div><div class="main-right-2-contents">
+                    <span>이건 읽어야지</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <footer>
+        <div class="update">
+            <p>업데이트</p>
+        </div>
+        <div class="footer-info">
+            <div style="margin-left: 15%;">
+                <p style="color: #ABABAB;">부산광역시 금정구 부산대학로63번길 2 (장전동) 부산대학교 소프트웨어융합교육원</p>
+                <p style="color: #ABABAB;">TEL : 051-123-4567, 321, 1026</p>
+                <p style="color: #D9D9D9">Copyright© Pusan National Univ. All Right Reserved.</p>
+                <p style="color: #ABABAB;">Powered by <span style="color: #350FC0;">OnlineJudge</span> Version: 1d496146f0d67811dc8f187eaebeccdae1277a98</p>
+            </div>
+        </div>
+    </footer>
+    
+
+    <script>
+        // 부터 글쓰기 부분
+        document.getElementById("writeBtn").addEventListener("click", () => { 
+            document.getElementById("writeBtn").style.display = "none";
+            document.getElementById("post-form").style.display = "inline-block";
+        });
+
+        document.getElementById("post-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const author = document.getElementById("author").value.trim();
+        const title = document.getElementById("title").value.trim();
+        const content = document.getElementById("content").value.trim();
+        const password = document.getElementById("password").value;
+
+        if (!author || !title || !content || !password) {
+            alert("모든 항목을 입력해주세요.");
+            return;
+        }
+
+        fetch("/community/post", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ author, title, content, password })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+                alert("작성 완료!");
+                window.location.href = "/community/home";
+            })
+            .catch(error => {
+                alert("작성 실패: " + error.message);
+            });
+        });
+        // 까지 글쓰기 부분
+
+
+        // 부터 글목록 부분
+        let currentPage = 0;
+
+        function loadPosts(page) {
+            fetch(`/community/read/pages?page=${page}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById("post-body");
+                    // tbody.innerHTML = "";
+
+                    data.content.forEach(post => {
+                        const row = document.createElement("a");
+                        row.class = `main-article`;
+                        row.href = `/community/read/home/${post.id}`;
+                        row.target = `_blank`;
+                        row.innerHTML = `
+                            <h3>${post.title}</h3>
+                            <p><span>${post.author}</span> / <span>${new Date(post.createdAt).toLocaleString()}</span></p>
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    renderPagination(data);
+                    currentPage = data.number;
+                });
+        }
+
+        function renderPagination(data) {
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = "";
+
+            if (data.number > 0) {
+                const prev = document.createElement("button");
+                prev.textContent = "이전";
+                prev.onclick = () => loadPosts(data.number - 1);
+                pagination.appendChild(prev);
+            }
+
+            const pageInfo = document.createElement("span");
+            pageInfo.textContent = ` 페이지 ${data.number + 1} / ${data.totalPages} `;
+            pagination.appendChild(pageInfo);
+
+            if (data.number + 1 < data.totalPages) {
+                const next = document.createElement("button");
+                next.textContent = "다음";
+                next.onclick = () => loadPosts(data.number + 1);
+                pagination.appendChild(next);
+            }
+        }
+
+        window.onload = () => {
+            loadPosts(0);
+        };
+
+        // 까지 글 목록 부분
+
+        //부터 글 내용 부분
+        
+    </script>
+</body>
+
+</html>
