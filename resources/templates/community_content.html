@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>백준지지</title>
+    <link rel="stylesheet" th:href="@{/css/community_content.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
+</head>
+
+<body>
+<nav class="nav-main">
+    <div onclick="location.href = '/main'" style="cursor:pointer;" class="nav-left">
+        <img th:src="@{/img/임시로고.png}" alt="Baekjoon GG Logo" class="site-logo" />
+        <p style="float: right;">BAEKJOON.GG</p>
+    </div>
+
+    <div class="nav-mid">
+        <a style="margin-left: 10%;" th:href="@{/ranking}" class="nav-link">랭킹</a>
+        <a th:href="@{/problem}" class="nav-link">문제</a>
+        <a th:href="@{/community/home}" class="nav-link">커뮤니티</a>
+        <a th:href="@{/search/home}" class="nav-link">프로필</a>
+    </div>
+    <div class="nav-right">
+        <a th:href="@{/signup/home}" class="auth-link">사용자등록</a>
+    </div>
+</nav>
+
+<main>
+    <div class="main-left">
+        <div class="main-title">
+            <span style="color: #350FC0;">자유게시판</span>
+        </div>
+
+        <div class="container">
+            <div class="title" id="post-title">제목 로딩 중...</div>
+            <div class="meta" id="post-meta">작성자 · 작성일</div>
+            <div class="content" id="post-content">내용 로딩 중...</div>
+
+            <div class="delete-section">
+                <h3>🔐 게시글 삭제</h3>
+                <label class="password-label" for="delete-password">비밀번호</label>
+                <input class="password-input" type="password" id="delete-password" placeholder="비밀번호 입력" />
+                <button id="delete-button" class="btn">삭제하기</button>
+            </div>
+
+            <div class="comment-section">
+                <h3>💬 댓글</h3>
+
+                <div id="comment-list">댓글 로딩 중...</div>
+
+                <h4 style="margin-top: 10px;">댓글 작성</h4>
+                <input type="text" id="comment-author" class="form-input" placeholder="이름 입력" />
+                <textarea class="comment-input" id="comment-content" placeholder="댓글 입력"></textarea>
+                <button id="comment-submit" class="btn">댓글 등록</button>
+            </div>
+        </div>
+
+        <a class="go-coummunity" th:href="@{/community/home}">글 목록</a>
+    </div>
+
+    <div class="main-right">
+        <div style="display: none;" class="main-right-1">
+            <div class="main-right-title">
+                <span>실시간 인기글</span>
+            </div>
+            <div class="main-right-1-contents"></div>
+        </div>
+
+        <div class="main-right-2">
+            <div class="main-right-title">
+                <span>추천게시물</span>
+            </div>
+            <div class="main-right-2-contents"><span>백준 공부법</span></div>
+            <div class="main-right-2-contents"><span>코드 오류 찾기</span></div>
+            <div class="main-right-2-contents"><span>머시기 암튼 필요한 거</span></div>
+            <div class="main-right-2-contents"><span>이건 읽어야지</span></div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="update">
+        <p>업데이트</p>
+    </div>
+    <div class="footer-info">
+        <div style="margin-left: 15%;">
+            <p style="color: #ABABAB;">부산광역시 금정구 부산대학로63번길 2 (장전동) 부산대학교 소프트웨어융합교육원</p>
+            <p style="color: #ABABAB;">TEL : 051-123-4567, 321, 1026</p>
+            <p style="color: #D9D9D9">Copyright© Pusan National Univ. All Right Reserved.</p>
+            <p style="color: #ABABAB;">Powered by <span style="color: #350FC0;">OnlineJudge</span></p>
+        </div>
+    </div>
+</footer>
+
+<!-- postId 삽입 (JS용) -->
+<script th:inline="javascript">
+    const postId = [[${postId}]];
+</script>
+
+<script>
+    // 게시글 데이터 로딩
+    window.onload = function () {
+        fetch(`/community/read/${postId}`)
+            .then(response => {
+                if (!response.ok) throw new Error("게시글을 불러올 수 없습니다.");
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById("post-title").textContent = data.title;
+                document.getElementById("post-meta").textContent =
+                    `${data.author} · ${new Date(data.createdAt).toLocaleString()}`;
+                document.getElementById("post-content").textContent = data.content;
+
+                loadComments();
+            })
+            .catch(err => alert("⚠️ " + err.message));
+    };
+
+    // 게시글 삭제
+    document.getElementById("delete-button").addEventListener("click", function () {
+        const password = document.getElementById("delete-password").value.trim();
+
+        if (!password) {
+            alert("비밀번호를 입력해주세요.");
+            return;
+        }
+
+        fetch("/community/delete", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ postId: postId, password: password })
+        })
+            .then(response => response.text().then(text => ({status: response.status, body: text})))
+            .then(result => {
+                if (result.status === 200) {
+                    alert("✅ " + result.body);
+                    window.location.href = "/community/home";
+                } else {
+                    alert("❌ " + result.body);
+                }
+            })
+            .catch(error => alert("❌ 오류가 발생했습니다."));
+    });
+
+    // 댓글 로딩
+    function loadComments() {
+        fetch(`/api/posts/${postId}/comments`)
+            .then(response => response.json())
+            .then(comments => {
+                const commentList = document.getElementById("comment-list");
+                commentList.innerHTML = comments.length === 0 ? "댓글이 없습니다." : "";
+
+                comments.forEach(comment => {
+                    const div = document.createElement("div");
+                    div.className = "comment";
+                    div.innerHTML = `
+                    <div class="comment-header">🖊 댓쓴이 : ${comment.author}, 작성 시간 : ${new Date(comment.createdAt).toLocaleString()}</div>
+                    <div class="comment-content">${comment.content}</div>
+                `;
+                    commentList.appendChild(div);
+                });
+            })
+            .catch(() => alert("댓글을 불러오는 중 오류가 발생했습니다."));
+    }
+
+
+    // 댓글 작성
+    document.getElementById("comment-submit").addEventListener("click", function () {
+        const author = document.getElementById("comment-author").value.trim();
+        const content = document.getElementById("comment-content").value.trim();
+
+        if (!author || !content) {
+            alert("이름과 댓글 내용을 모두 입력해주세요.");
+            return;
+        }
+
+        fetch(`/api/posts/${postId}/comments`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({author, content})
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("댓글 등록 실패");
+                return response.json();
+            })
+            .then(() => {
+                document.getElementById("comment-author").value = "";
+                document.getElementById("comment-content").value = "";
+                loadComments();
+            })
+            .catch(err => alert("❌ " + err.message));
+    });
+</script>
+</body>
+
+</html>

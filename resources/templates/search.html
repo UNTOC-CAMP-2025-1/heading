@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>백준지지</title>
+    <link rel="stylesheet" th:href="@{/css/search.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
+</head>
+
+<body>
+<nav class="nav-main">
+    <div th:onclick="'location.href=\'' + @{/main} + '\''" style="cursor:pointer;" class="nav-left">
+        <img th:src="@{/img/임시로고.png}" alt="Baekjoon GG Logo" class="site-logo" />
+        <p style="float: right;">BAEKJOON.GG</p>
+    </div>
+
+    <div class="nav-mid">
+        <a style="margin-left: 10%;" th:href="@{/ranking/home}" class="nav-link">랭킹</a>
+        <a th:href="@{/problem}" class="nav-link">문제</a>
+        <a th:href="@{/community/home}" class="nav-link">커뮤니티</a>
+        <a th:href="@{/search/home}" class="nav-link">프로필</a>
+    </div>
+    <div class="nav-right">
+        <a th:href="@{/signup/home}" class="auth-link">사용자등록</a>
+    </div>
+</nav>
+
+<main>
+    <img class="selon" th:src="@{/img/임시로고.png}" alt="error">
+    <div class="search-bar">
+        <label for="search" class="search-left">검색 :</label>
+        <input id="search" type="text" class="search-input" placeholder="백준 아이디를 입력해주세요">
+        <button type="button" class="search-right" onclick="searchProfile()">.GG</button>
+    </div>
+
+    <script>
+        function searchProfile() {
+            const nickname = document.getElementById("search").value.trim();
+            if (nickname) {
+                window.location.href = '/userinfo/home/' + encodeURIComponent(nickname);
+            } else {
+                alert("백준 아이디를 입력해주세요.");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("search");
+            input.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    searchProfile();
+                }
+            });
+        });
+    </script>
+
+    <div class="ranking-wrap">
+        <hr class="ranking-hr">
+        <table class="ranking-table">
+            <thead>
+            <tr>
+                <th>순위</th>
+                <th>닉네임</th>
+                <th>학년</th>
+                <th>학과</th>
+                <th>티어</th>
+                <th>푼 문제 수</th>
+                <th>점수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1위</td>
+                <td class="pointcolor">닉네임1</td>
+                <td>1</td>
+                <td>인공지능</td>
+                <td>Blue1</td>
+                <td>15문제</td>
+                <td class="up">▲10</td>
+            </tr>
+            <tr>
+                <td>2위</td>
+                <td class="pointcolor">닉네임2</td>
+                <td>2</td>
+                <td>컴공</td>
+                <td>Diamond1</td>
+                <td>13문제</td>
+                <td class="up">▲9</td>
+            </tr>
+            <tr>
+                <td>3위</td>
+                <td class="pointcolor">닉네임3</td>
+                <td>3</td>
+                <td>의생공</td>
+                <td>Platinum</td>
+                <td>13문제</td>
+                <td class="up">▲8</td>
+            </tr>
+            <tr>
+                <td>4위</td>
+                <td class="pointcolor">닉네임4</td>
+                <td>4</td>
+                <td>컴공</td>
+                <td>Platinum</td>
+                <td>12문제</td>
+                <td class="up">▲7</td>
+            </tr>
+            <tr>
+                <td>5위</td>
+                <td class="pointcolor">닉네임5</td>
+                <td>2</td>
+                <td>반도체</td>
+                <td>Gold1</td>
+                <td>11문제</td>
+                <td class="down">▼6</td>
+            </tr>
+            <tr>
+                <td>6위</td>
+                <td class="pointcolor">닉네임6</td>
+                <td>1</td>
+                <td>자전</td>
+                <td>Gold2</td>
+                <td>10문제</td>
+                <td class="down">▼5</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer>
+    <div class="update">
+        <p>업데이트</p>
+    </div>
+    <div class="footer-info">
+        <div style="margin-left: 15%;">
+            <p style="color: #ABABAB;">부산광역시 금정구 부산대학로63번길 2 (장전동) 부산대학교 소프트웨어융합교육원</p>
+            <p style="color: #ABABAB;">TEL : 051-123-4567, 321, 1026</p>
+            <p style="color: #D9D9D9">Copyright© Pusan National Univ. All Right Reserved.</p>
+            <p style="color: #ABABAB;">Powered by <span style="color: #350FC0;">OnlineJudge</span></p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

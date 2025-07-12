@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>백준지지</title>
+
+    <link rel="stylesheet" th:href="@{/css/signup.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
+</head>
+<body>
+
+<nav class="nav-main">
+    <div onclick="location.href='/main'" style="cursor:pointer;" class="nav-left">
+        <img th:src="@{/img/임시로고.png}" alt="Baekjoon GG Logo" class="site-logo" />
+        <p style="float: right;">BAEKJOON.GG</p>
+    </div>
+    <div class="nav-mid">
+        <a style="margin-left: 10%;" th:href="@{/ranking/home}" class="nav-link">랭킹</a>
+        <a th:href="@{/problem}" class="nav-link">문제</a>
+        <a th:href="@{/community/home}" class="nav-link">커뮤니티</a>
+        <a th:href="@{/search/home}" class="nav-link">프로필</a>
+    </div>
+    <div class="nav-right">
+        <a th:href="@{/signup/home}" class="auth-link">사용자등록</a>
+    </div>
+</nav>
+
+<div style="width: 100%; display: flex; justify-content: left; border-bottom: 0.64px solid #eee;">
+    <div class="page-title">사용자등록</div>
+</div>
+
+<main>
+    <section class="signup-container">
+        <div class="signup-header">
+            <h1 class="signup-title">사용자등록</h1>
+            <p class="signup-text">
+                등록을 하면 백준 지지의 <a href="#" class="link">이용약관</a>,
+                <a href="#" class="link">개인정보취급방침 및 개인정보3자제공</a>에
+                동의하게 됩니다.
+            </p>
+            <p class="signup-notice">
+                닉네임, 상태 메시지, 목표치는 회원가입 후 정보 수정에서 변경할 수 있습니다.
+            </p>
+            <p class="signup-notice">
+                ‘인증번호 받기’를 누르면 인증번호가 발급됩니다.
+            </p>
+            <p class="signup-notice"><a target="_blank" href="https://solved.ac/" class="link">solved.ac 프로필 편집</a>에서 백준 상태 메시지를 해당 값으로 변경한 뒤, 인증완료 버튼을 눌러 주세요.</p>
+        </div>
+        <form class="signup-form" onsubmit="return handleSubmit(event)">
+            <div class="form-group">
+                <label for="nickname" class="form-label">닉네임 <span style="color: gray; font-size: small;">(3~20자)</span></label>
+                <div class="input-group">
+                    <input type="text" class="form-input" id="nickname" minlength="3" maxlength="20"/>
+                    <button type="button" class="btn-primary" onclick="checkNickname()">중복확인</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id" class="form-label">백준아이디 <span style="color: gray; font-size: small;">(3~20자)</span></label>
+                <div class="input-group">
+                    <input type="text" class="form-input" id="id" minlength="3" maxlength="20"/>
+                    <button type="button" class="btn-primary" id="bojCheckBtn" onclick="checkBojId()">중복확인</button>
+                    <button type="button" class="btn-primary" id="bojTokenBtn" onclick="requestToken()" style="display: none;">인증번호받기</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="number" class="form-label">인증번호(solved 상태메시지를 인증번호로 변경 후 인증해주세요)</label>
+                <div class="input-group">
+                    <input type="text" class="form-input" id="number" readonly />
+                    <button type="button" class="btn-primary" onclick="verifyToken()">인증하기</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="stat" class="form-label">상태 메시지</label>
+                <div class="input-group">
+                    <input type="text" class="form-input-nobutton" id="stat" placeholder="목표 : 하루 한 문제 풀기!"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">이메일</label>
+                <div class="input-group">
+                    <input type="email" class="form-input-nobutton" id="email"/>
+                </div>
+            </div>
+            <div class="half-wrap">
+                <div class="form-group-half">
+                    <label for="grade" class="form-label">학년</label>
+                    <select class="form-input-nobutton" id="grade">
+                        <option value="" selected disabled hidden></option>
+                        <option value="1">1학년</option>
+                        <option value="2">2학년</option>
+                        <option value="3">3학년</option>
+                        <option value="4">4학년</option>
+                        <option value="5">졸업</option>
+                    </select>
+                </div>
+                <div class="form-group-half">
+                    <label for="field" class="form-label">학과</label>
+                    <select class="form-input-nobutton" id="field">
+                        <option value="" selected disabled hidden></option>
+                        <option value="컴퓨터공학전공">컴퓨터공학전공</option>
+                        <option value="인공지능전공">인공지능전공</option>
+                        <option value="기타">기타</option>
+                        <option value="모름">모름</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="goal" class="form-label">목표 티어</label>
+                <select class="form-input-nobutton" id="goal">
+                    <option value="" selected disabled hidden>선택해주세요</option>
+                    <optgroup label="Bronze">
+                        <option value="Bronze 5">Bronze 5</option>
+                        <option value="Bronze 4">Bronze 4</option>
+                        <option value="Bronze 3">Bronze 3</option>
+                        <option value="Bronze 2">Bronze 2</option>
+                        <option value="Bronze 1">Bronze 1</option>
+                    </optgroup>
+                    <optgroup label="Silver">
+                        <option value="Silver 5">Silver 5</option>
+                        <option value="Silver 4">Silver 4</option>
+                        <option value="Silver 3">Silver 3</option>
+                        <option value="Silver 2">Silver 2</option>
+                        <option value="Silver 1">Silver 1</option>
+                    </optgroup>
+                    <optgroup label="Gold">
+                        <option value="Gold 5">Gold 5</option>
+                        <option value="Gold 4">Gold 4</option>
+                        <option value="Gold 3">Gold 3</option>
+                        <option value="Gold 2">Gold 2</option>
+                        <option value="Gold 1">Gold 1</option>
+                    </optgroup>
+                    <optgroup label="Platinum">
+                        <option value="Platinum 5">Platinum 5</option>
+                        <option value="Platinum 4">Platinum 4</option>
+                        <option value="Platinum 3">Platinum 3</option>
+                        <option value="Platinum 2">Platinum 2</option>
+                        <option value="Platinum 1">Platinum 1</option>
+                    </optgroup>
+                    <optgroup label="Diamond">
+                        <option value="Diamond 5">Diamond 5</option>
+                        <option value="Diamond 4">Diamond 4</option>
+                        <option value="Diamond 3">Diamond 3</option>
+                        <option value="Diamond 2">Diamond 2</option>
+                        <option value="Diamond 1">Diamond 1</option>
+                    </optgroup>
+                    <optgroup label="Ruby">
+                        <option value="Ruby 5">Ruby 5</option>
+                        <option value="Ruby 4">Ruby 4</option>
+                        <option value="Ruby 3">Ruby 3</option>
+                        <option value="Ruby 2">Ruby 2</option>
+                        <option value="Ruby 1">Ruby 1</option>
+                    </optgroup>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit" id="submitBtn" disabled>사용자가입</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <div class="update"><p>업데이트</p></div>
+    <div class="footer-info">
+        <div style="margin-left: 15%;">
+            <p style="color: #ABABAB;">부산광역시 금정구 부산대학로63번길 2 (장전동)</p>
+            <p style="color: #ABABAB;">TEL : 051-123-4567</p>
+            <p style="color: #D9D9D9">Copyright© PNU All Rights Reserved.</p>
+            <p style="color: #ABABAB;">Powered by <span style="color: #350FC0;">OnlineJudge</span></p>
+        </div>
+    </div>
+</footer>
+
+<script th:src="@{/js/signup.js}"></script>
+</body>
+</html>
